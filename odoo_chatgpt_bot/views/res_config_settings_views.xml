@@ -35,6 +35,15 @@
                                         <field name="limit_channel_count"/>
                                     </div>
                                 </div>
+                                <div class="content-group">
+                                    <label for="openapi_chatgpt_role" class="o_form_label"/>
+                                    <div class="text-muted">
+                                        定义AI初始的角色
+                                    </div>
+                                    <div class="mt16">
+                                        <field name="openapi_chatgpt_role"/>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>

@@ -3,7 +3,7 @@ import openai
 from odoo import models, _
 from odoo.exceptions import UserError
 
-CHATGPT_CHANNEL_MESSAGE = [{"role": "system", "content": "AI小助手"}]    # 保存频道对话的记录
+CHATGPT_CHANNEL_MESSAGE = []    # 保存频道对话的记录
 CHATGPT_PARTNER_MESSAGE = {}   # 保存个人用户的记录
 
 
@@ -51,7 +51,9 @@ class Channel(models.Model):
             partner_messages = CHATGPT_PARTNER_MESSAGE[partner_name]
             # 对话次数不超过x次。超过就清空内容重新创建对话
             if msg_body in ['刷新对话', '清除对话'] or len(partner_messages) >= limit_channel_count:
-                CHATGPT_PARTNER_MESSAGE.update({partner_name: [{"role": "system", "content": "个人AI小助手"}]})
+                CHATGPT_PARTNER_MESSAGE.update({partner_name: [{
+                    "role": "system", "content": config_parameter.get_param('odoo_chatgpt_bot.openapi_chatgpt_role')
+                }]})
                 body = "------- 已自动刷新对话内容，请重新提问。（或者手动输入'刷新对话/清除对话'进行刷新。）--------"
                 self.with_user(chatgpt_user).message_post(body=body, message_type='comment', subtype_xmlid='mail.mt_comment')
             else:
@@ -66,7 +68,7 @@ class Channel(models.Model):
         elif author_id != chatgpt_partner.id and msg_vals.get('model', '') == 'mail.channel' and msg_vals.get('res_id', 0) == chatgpt_channel.id:
             # 频道对话次数每次的次数不超过x次。超过就清空内容重新创建对话
             if msg_body in ['刷新对话', '清除对话'] or len(CHATGPT_CHANNEL_MESSAGE) >= limit_channel_count:
-                CHATGPT_CHANNEL_MESSAGE = [{"role": "system", "content": "AI小助手"}]
+                CHATGPT_CHANNEL_MESSAGE = [{"role": "system", "content": config_parameter.get_param('odoo_chatgpt_bot.openapi_chatgpt_role')}]
                 body = "------------- 已自动刷新对话内容，请重新提问。（或者手动输入'刷新对话'进行刷新。）----------------------"
                 chatgpt_channel.with_user(chatgpt_user).message_post(body=body, message_type='comment', subtype_xmlid='mail.mt_comment')
             else:
