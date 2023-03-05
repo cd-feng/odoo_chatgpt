@@ -26,6 +26,15 @@
                                         <field name="openapi_api_key"/>
                                     </div>
                                 </div>
+                                <div class="content-group">
+                                    <label for="limit_channel_count" class="o_form_label"/>
+                                    <div class="text-muted">
+                                        频道对话次数，注意数值越大表示可持续对话越长。但会增加内存和API占用过高。
+                                    </div>
+                                    <div class="mt16">
+                                        <field name="limit_channel_count"/>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>

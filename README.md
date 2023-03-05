@@ -4,6 +4,7 @@ GIT仓库地址： [suxuefeng20/odoo_chatgpt: Odoo集成ChatGPT (github.com)](ht
 
 本项目基于odoo15实现在odoo中以对话方式集成chatGPT. 在使用前，请先到openai中申请个人/公司秘钥。
 
+已更新至使用`gpt-3.5-turbo`模型
 
 
 #### 要申请OpenAI的API密钥，可以按照以下步骤进行：
